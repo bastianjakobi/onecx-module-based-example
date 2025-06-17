@@ -1,7 +1,15 @@
-import { APP_INITIALIZER, DoBootstrap, Injector, NgModule } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  DoBootstrap,
+  Injector,
+  NgModule,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { addInitializeModuleGuard, AppStateService } from '@onecx/angular-integration-interface';
+import {
+  addInitializeModuleGuard,
+  AppStateService,
+} from '@onecx/angular-integration-interface';
 import { remoteRoutes } from './app.routes';
 import { AppEntrypointComponent } from './app-entrypoint.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,7 +27,10 @@ import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { createAppEntrypoint, initializeRouter } from '@onecx/angular-webcomponents';
+import {
+  createAppEntrypoint,
+  initializeRouter,
+} from '@onecx/angular-webcomponents';
 
 export const commonImports = [
   BrowserModule,
@@ -56,7 +67,7 @@ export const commonProviders = [
       multi: true,
       deps: [Router, AppStateService],
     },
-        {
+    {
       provide: TRANSLATION_PATH,
       useFactory: (appStateService: AppStateService) =>
         translationPathFactory('assets/i18n/')(appStateService),
@@ -68,6 +79,11 @@ export const commonProviders = [
 export class RemoteModule implements DoBootstrap {
   constructor(private readonly injector: Injector) {}
   ngDoBootstrap(): void {
-    createAppEntrypoint(AppEntrypointComponent, 'onecx-module-based-example', this.injector)
+    createAppEntrypoint(
+      AppEntrypointComponent,
+      'onecx-module-based-example',
+      this.injector,
+      { usePortalLayoutStyles: false }
+    );
   }
 }
